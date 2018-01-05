@@ -1,11 +1,11 @@
 /**********************************************************
-							  
+
   MEX file for the tcpip toolbox.
                                                           */
 #define VERSION "Version  2.0.5  2003-09-16"
 
 /*
-%   This file(s) is part of the tcp_udp_ip toolbox (C) Peter Rydesäter et al.
+%   This file(s) is part of the tcp_udp_ip toolbox (C) Peter Rydes?ter et al.
 %   et al.  1998-2003 for running in MATLAB(R) as scripts and/or plug-ins.
 %
 %   This program is free software; you can redistribute it and/or modify
@@ -22,7 +22,7 @@
 %   along with this program; if not, write to the Free Software
 %   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 %
-%   In addition, as a SPECIAL EXCEPTION, Peter Rydesäter, SWEDEN,
+%   In addition, as a SPECIAL EXCEPTION, Peter Rydes?ter, SWEDEN,
 %   gives permission to link the code of this program with any library,
 %   and distribute linked combinations of it. You must obey the GNU
 %   General Public License in all respects for all of the code in the
@@ -33,33 +33,33 @@
 %   pnet.c (.dll) as a plug-in as it is intended and let it be (dynamical)
 %   linked to MATLAB(R) or any compiled stand alone application.
 
-    
+
   Notes for Unix implementation
   Compile this with:
-  
+
   mex -O pnet.c
-  
+
   Notes for Windows implementation
- 
+
   When using LCC, compile this with:
   mex -O pnet.c {MATLAB_INSTALL_DIR}\sys\lcc\lib\wsock32.lib -DWIN32
 
   When using Visual C++, compile this with:
   mex -O pnet.c ws2_32.lib -DWIN32
-  
-  
+
+
   == Main Authour ==           == Windows support ==      == Earlie/Basic UDP support ==
-  Peter Rydesäter              Mario Bergeron             Mike Medeiros at 23-Jan-2001.
+  Peter Rydes?ter              Mario Bergeron             Mike Medeiros at 23-Jan-2001.
                                LYRtech
-  Östersund, Sweden            Québec, Canada
-  +46 70 560 68 16             
+  ?stersund, Sweden            Qu?bec, Canada
+  +46 70 560 68 16
   Peter.Rydesater@mh.se        Mario.Bergeron@lyrtech.com
 
 
   SE MORE:  http://www.rydesater.com
-  
+
   **********************************************************/
-    
+
 /******* GENERAL DEFINES *********/
 #include <stdio.h>
 #include <stdlib.h>
@@ -69,7 +69,7 @@
 
 /******* WINDOWS ONLY DEFINES *********/
 #ifdef WIN32
-#define IFWINDOWS(dothis) dothis 
+#define IFWINDOWS(dothis) dothis
 #define IFUNIX(dothis)
 //#include <windows.h>
 #include <winsock2.h>
@@ -82,7 +82,7 @@
 
 /******* NON WINDOWS DEFINES *********/
 #else
-#define IFWINDOWS(dothis) 
+#define IFWINDOWS(dothis)
 #define IFUNIX(dothis) dothis
 
 #include <errno.h>
@@ -91,7 +91,7 @@
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
-#include <arpa/inet.h> 
+#include <arpa/inet.h>
 #include <unistd.h>
 #include <fcntl.h>
 #define nonblockingsocket(s)  fcntl(s,F_SETFL,O_NONBLOCK)
@@ -111,7 +111,7 @@
 
 /********** DEFINES related to pnet own functionality *****************/
 /*   Set debuging on/off   */
-#define debug_view_con_status(X)   // __debug_view_con_status(X)
+#define debug_view_con_status(X)  //  __debug_view_con_status(X)
 
 #define MAX_CON         100       /* Maximum number of simultanius tcpip connections.*/
 #define NAMEBUFF_LEN    100
@@ -130,8 +130,8 @@
 
 /* Different status of a con_info struct handles a file descriptor    */
 #define STATUS_FREE       -1
-#define STATUS_NOCONNECT   0    // Disconnected pipe that is note closed 
-#define STATUS_TCP_SOCKET  1 
+#define STATUS_NOCONNECT   0    // Disconnected pipe that is note closed
+#define STATUS_TCP_SOCKET  1
 #define STATUS_IO_OK       5    // Used for IS_... test
 #define STATUS_UDP_CLIENT  6
 #define STATUS_UDP_SERVER  8
@@ -186,7 +186,7 @@ void Print_Start_Message(){
 	      "Loaded pnet MEX-file for the tcp/udp/ip-toolbox Compiled @ "
 	      __DATE__ " " __TIME__  "\n"
 	      VERSION "\n"
-	      "Copyright (C) Peter Rydesäter, Sweden, et al. , 1998 - 2003\n"
+	      "Copyright (C) Peter Rydes?ter, Sweden, et al. , 1998 - 2003\n"
 	      "GNU General Public License, se license.txt for full license notis.\n"
 	      "You are allowed to (dynamicaly) link this file with non-free code. \n\n"
 	      "   http://www.rydesater.com \n\n"
@@ -361,7 +361,7 @@ void byteswapcopy(char *dest,char *src,const int elements,const int elementsize,
     // A little smart ckeck of byte the machine byte order.
     const int ordertest=1;
     const char *is_intel_order=(const char *)(&ordertest);
-    if(is_intel_order[0]==1 && mode==2)   mode=1;    
+    if(is_intel_order[0]==1 && mode==2)   mode=1;
     if(is_intel_order[0]==0 && mode==3)   mode=1;
     //    fprintf(stderr,"SWAP COPY E:%d SI:%d SWAP:%d\n",elements,elementsize,mode);
     if(mode==1){
@@ -577,7 +577,7 @@ int my_mexInputArray2Buff(const int argno,io_buff *buff)
     if(my_mexFindInputOption(argno+1,"SWAP"))    swap=1;
     if(my_mexFindInputOption(argno+1,"NETWORK")) swap=2;
     if(my_mexFindInputOption(argno+1,"INTEL"))   swap=3;
-    
+
     newbuffsize(buff,buff->pos+len*si);
 
     if(id==mxCHAR_CLASS){
@@ -643,7 +643,7 @@ void my_mexReturnArrayFromBuff(const int argno,io_buff *buff,const int line)
 {
     const int maxelements=my_mexInputSize(argno);
     const mxClassID id=str2classid(my_mexInputOptionString(argno+1));
-    int dims[20]={0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0 };
+    mwSize dims[20]={0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0 };
     const int si=classid2size(id);
     int returnelements= ( (buff->pos/si)< maxelements )?(buff->pos/si):maxelements;
     int deleteelements=returnelements;
@@ -687,18 +687,21 @@ void my_mexReturnArrayFromBuff(const int argno,io_buff *buff,const int line)
     }
     if(! (gret_args>gnlhs && gret_args>1) ){
 	/* Create a 2-Dimensional character mxArray.*/
-	if( dims[0]==0)
+	if( dims[0]==0) {
 	    gplhs[gret_args] = mxCreateNumericArray(0,dims,id,mxREAL);
-	else
+        }
+	else {
 	    gplhs[gret_args] = mxCreateNumericArray(return_no_dims,dims,id,mxREAL);
+        }
 	if(gplhs[gret_args] == NULL)
 	    mexErrMsgTxt("Could not create return array.");
 	if(dims[0]!=0){
 	    if(id==mxCHAR_CLASS){
 		int i;
 		mxChar *p=(mxChar *)mxGetPr(gplhs[gret_args]);
-		for(i=0;i<returnelements;i++)
+		for(i=0;i<returnelements;i++){
 		    p[i]=buff->ptr[i];
+                }
 	    }else{
 		char *p=(char *)mxGetPr(gplhs[gret_args]);
 		byteswapcopy(p,buff->ptr,returnelements,si,swap);
@@ -706,7 +709,7 @@ void my_mexReturnArrayFromBuff(const int argno,io_buff *buff,const int line)
 	}
 	gret_args++;
     }
-       //    debug_view_con_status("GET_ARRAY NÄSTAN KLAR");
+       //    debug_view_con_status("GET_ARRAY NÃ„STAN KLAR");
     // Delete from read buffer if not "VIEW" option and dims filled
     if(my_mexFindInputOption(argno+1,"VIEW")==0 && deleteelements>0 ){
 	buff->pos-=deleteelements*si;
@@ -869,7 +872,7 @@ int read2buff(const int len,int newline,int noblock)
 		retval=recv(con[con_index].fid,&con[con_index].read.ptr[con[con_index].read.pos],readlen ,MSG_NOSIGNAL);
 	    else{
 		struct sockaddr_in my_addr;
-		int fromlen=sizeof(my_addr); 
+		int fromlen=sizeof(my_addr);
 
 		// Copy 0.0.0.0 adress and 0 port to remote_addr as init-value.
 		memset(&my_addr,0,sizeof(my_addr));
@@ -946,8 +949,8 @@ int tcp_connect(const char *hostname,const int port)
     return con_index;
 }
 
-/*******************************************************************     
- Function Creating a TCP server socket                                 
+/*******************************************************************
+ Function Creating a TCP server socket
  or a connectionless UDP client socket.
 */
 int tcp_udp_socket(int port,int dgram_f)
@@ -1003,7 +1006,7 @@ int tcpiplisten(int noblock)
 /*****************************************************************/
 /* Make a UDP socket be a "connected" UDP socket                 */
 int udp_connect(const char *hostname,int port)
-{	
+{
     if(con[con_index].status < STATUS_UDP_CLIENT)
 	mexErrMsgTxt("Must pass UDP client or server handler!");
     if(ipv4_lookup(hostname,port)==-1)
@@ -1036,7 +1039,7 @@ void mexFunction(
 #ifdef WIN32
 	WORD wVersionRequested;
 	WSADATA wsaData;
-	int wsa_err;    
+	int wsa_err;
 	wVersionRequested = MAKEWORD( 2, 0 );
 	wsa_err = WSAStartup( wVersionRequested, &wsaData );
 	if (wsa_err)
@@ -1065,7 +1068,7 @@ void mexFunction(
 	/* GET FIRST ARGUMENT -- The "function" name */
 	strncpy(fun,my_mexInputOptionString(0),80);
 //	mexPrintf("DEBUG MEX(1):[%d] %s\n",con_index,fun);   // DEBUG
-	
+
 	/* Find of the function name corresponds to a non connection associated function */
 	if(myoptstrcmp(fun,"CLOSEALL")==0){
 	    closeall();
@@ -1105,12 +1108,12 @@ void mexFunction(
     /* Get connection handler and suppose that it is a connection assosiated function */
     /* Find given handel */
     //       if(strncasecmp(fun,"DEF",3)!=0)
-    if(move_con((int)my_mexInputScalar(0))==0) 
+    if(move_con((int)my_mexInputScalar(0))==0)
 	mexErrMsgTxt("Unknown connection handler");
     strncpy(fun,my_mexInputOptionString(1),80);
  //   mexPrintf("DEBUG MEX(2):[%d] %s\n",con_index,fun);   // DEBUG
     debug_view_con_status("CON_MOVED!!");
-       
+
        if(myoptstrcmp(fun,"CLOSE")==0){
 	   close_con();
 	return;
